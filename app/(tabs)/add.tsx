@@ -17,7 +17,7 @@ export default function TabTwoScreen() {
 
   const storeData = async (value : string) => {
     try {
-      await AsyncStorage.setItem(numTasks.toString(), numTasks.toString() + ": " + value);
+      await AsyncStorage.setItem(numTasks.toString(), value);
       setNumTasks(numTasks + 1);
     } catch (e) {
       // saving error
@@ -33,9 +33,7 @@ export default function TabTwoScreen() {
     <SafeAreaProvider>
       <SafeAreaView>
         <ThemedView 
-        style=
-        {[styles.titleContainer,
-        ]}>
+        style={styles.titleContainer}>
           <ThemedText type="title">Add a task</ThemedText>
         </ThemedView>
         <TextInput

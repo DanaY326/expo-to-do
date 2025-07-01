@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function TabOneScreen() {
   var numTasks = 0;
-  const [render, setRender] = React.useState(0);
+  const [renderDummy, setRenderDummy] = React.useState(true);
 
   const getAllKeys = async () => {
     try {
@@ -46,7 +46,7 @@ export default function TabOneScreen() {
   const removeValue = async (key : string) => {
     try {
       await AsyncStorage.removeItem(key)
-      setRender(render + 1)
+      setRenderDummy(!renderDummy)
     } catch(e) {
       // remove error
     }
@@ -82,7 +82,7 @@ export default function TabOneScreen() {
                   <FlatList
                     keyExtractor={(item) => item[0]}
                     data={tasks}
-                    extraData={render}
+                    extraData={renderDummy}
                     renderItem={({item}) => (
                     <ThemedView style={{flexDirection: 'row', alignItems: 'center'}}>
                       <ThemedText style={{margin: 8}}>{item[1]}</ThemedText>
