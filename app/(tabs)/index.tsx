@@ -1,75 +1,129 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { Platform, StyleSheet, TextInput, TouchableHighlight, View, Text, FlatList } from 'react-native';
+import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
-import { HelloWave } from '@/components/HelloWave';
+import { Collapsible } from '@/components/Collapsible';
+import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { IconSymbol } from '@/components/ui/IconSymbol';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function HomeScreen() {
+export default function TabOneScreen() {
+  var numTasks = 0;
+  const [render, setRender] = React.useState(0);
+
+  const getAllKeys = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys()
+      return keys;
+    } catch(e) {
+      // read key error
+    }
+  }
+
+  const getData = async () => {
+    const keys = await getAllKeys();
+    let tasks = [];
+    if (keys) {
+      for (const key of keys) {
+        try {
+          const value = await AsyncStorage.getItem(key);
+          if (value !== null) {
+            // value previously stored
+            tasks.push([key, value]);
+          }
+        } catch (e) {
+          // error reading value
+        }
+      }
+    }
+    return tasks;
+  };
+
+  const removeValue = async (key : string) => {
+    try {
+      await AsyncStorage.removeItem(key)
+      setRender(render + 1)
+    } catch(e) {
+      // remove error
+    }
+
+    console.log('Done.')
+  }
+
+  const removeAll = async () => {
+    const keys = await getAllKeys();
+    if (keys) {
+      for (const key of keys) {
+        try {
+          await removeValue(key);
+        } catch (e) {
+          // error removing value
+        }
+      }
+    }
+  }
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaProvider>
+      <SafeAreaView>
+        <ThemedView 
+        style={styles.titleContainer}>
+          <ThemedText type="title">To Do:</ThemedText>
+        </ThemedView>
+        <ThemedView style={{flexDirection: 'column', gap: 8}}>
+          <ThemedText>
+            {
+              getData().then((tasks) => {
+                return (
+                  <FlatList
+                    keyExtractor={(item) => item[0]}
+                    data={tasks}
+                    extraData={render}
+                    renderItem={({item}) => (
+                    <ThemedView style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <ThemedText style={{margin: 8}}>{item[1]}</ThemedText>
+                      <TouchableHighlight style={{alignItems:'center',justifyContent:'center'}} onPress = {() => removeValue(item[0])} underlayColor = 'transparent'>
+                        <View>
+                          <Text>Completed!</Text>
+                        </View>
+                      </TouchableHighlight>
+                    </ThemedView>
+                    )}>
+                  </FlatList>
+                );
+              })
+            }
+            </ThemedText>
+            <TouchableHighlight style={{alignItems:'center',justifyContent:'center'}} onPress = {removeAll} underlayColor = 'transparent'>
+              <View>
+                <Text>Clear tasks</Text>
+              </View>
+            </TouchableHighlight>
+        </ThemedView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  headerImage: {
+    color: '#808080',
+    bottom: -90,
+    left: -35,
+    position: 'absolute',
+  },
   titleContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });
