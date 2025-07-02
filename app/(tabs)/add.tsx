@@ -1,7 +1,8 @@
 import { Image } from 'expo-image';
 import React from 'react';
-import { Platform, Button, StyleSheet, TextInput, TouchableHighlight, View, Text } from 'react-native';
+import { Platform, Button, StyleSheet, KeyboardAvoidingView, TextInput, TouchableHighlight, View, Text, Keyboard } from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import tw from '../../lib/tailwind';
 
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
@@ -9,11 +10,31 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import ColoredButton from '@/components/ui/ColoredButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SolidHeader from '@/components/SolidHeader';
 
-export default function TabTwoScreen() {
+export default function TabThreeScreen() {
   const [numTasks, setNumTasks] = React.useState(0);
   const [text, setText] = React.useState("");
+  const [isKeyboardVisible, setIsKeyboardVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', handleKeyboardShow);
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', handleKeyboardHide);
+
+    return () => {
+      showSubscription.remove();
+    };
+  }, []);
+
+  const handleKeyboardShow = (event : any ) => {
+    setIsKeyboardVisible(true);
+  };
+
+  const handleKeyboardHide = (event : any ) => {
+    setIsKeyboardVisible(false);
+  };
 
   const storeData = async (value : string) => {
     try {
@@ -33,46 +54,34 @@ export default function TabTwoScreen() {
     <SafeAreaProvider>
       <SafeAreaView>
         <ThemedView 
-        style={styles.titleContainer}>
-          <ThemedText type="title">Add a task</ThemedText>
+          style={tw`flex flex-col items-center justify-center`}>
+          <SolidHeader text="Add Task" />
+          <ThemedView style={tw`flex flex-col items-center justify-center`}>
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={tw `py-4 px-20`}>
+              <Text>
+              <TextInput
+                  editable
+                  multiline
+                  numberOfLines={2}
+                  maxLength={140}
+                  style={tw`flex border border-gray-300 items-center text-sm w-full text-black rounded-lg p-2`}
+                  onChangeText={text => setText(text)}
+                  value={text}
+                  onSubmitEditing={onSubmit}
+                  placeholder="What do you need to do?"
+                  inputMode="text"
+                />
+              </Text>
+              <ThemedView style={tw`items-center`}>
+                <ColoredButton 
+                  text="Submit"
+                    onPress={onSubmit}/>
+                    {isKeyboardVisible ? <ColoredButton text="V" onPress={Keyboard.dismiss} /> : null}
+              </ThemedView>
+            </KeyboardAvoidingView>
+          </ThemedView>
         </ThemedView>
-        <TextInput
-            editable
-            multiline
-            numberOfLines={6}
-            maxLength={140}
-            style={styles.input}
-            onChangeText={text => setText(text)}
-            value={text}
-            onSubmitEditing={onSubmit}
-            placeholder="What do you need to do?"
-            inputMode="text"
-          />
-        <TouchableHighlight style={{alignItems:'center',justifyContent:'center'}} onPress = {onSubmit} underlayColor = 'transparent'>
-          <View>
-              <Text>Submit</Text>
-          </View>
-      </TouchableHighlight>
       </SafeAreaView>
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-});

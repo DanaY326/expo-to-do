@@ -1,6 +1,8 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import tw from 'twrnc';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -17,6 +19,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
+        tabBarHideOnKeyboard: true,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
@@ -34,10 +37,17 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="themes"
+        options={{
+          title: 'Themes',
+          tabBarIcon: ({ color }) => <MaterialIcons size={28} name="color-lens" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="add"
         options={{
-          title: 'Add',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'New',
+          tabBarIcon: ({ color }) => <MaterialIcons size={28} name="add-circle" color={color} />,
         }}
       />
     </Tabs>
