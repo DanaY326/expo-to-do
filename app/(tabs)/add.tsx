@@ -2,7 +2,7 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { Platform, Button, StyleSheet, KeyboardAvoidingView, TextInput, TouchableHighlight, View, Text, Keyboard } from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
-import tw from '../../lib/tailwind';
+import tw from 'twrnc';
 
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
