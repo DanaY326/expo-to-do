@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import { FlatList, ScrollView, Dimensions } from 'react-native';
+import { FlatList, Platform, Dimensions } from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import tw from 'twrnc';
 
@@ -15,6 +15,8 @@ export default function TabOneScreen() {
   const [renderDummy, setRenderDummy] = React.useState(true);
 
   const { tintColorLight, setTintColorLight, tintColorDark, setTintColorDark } = useContext(ThemeContext);
+  
+  const windowHeight = Dimensions.get('window').height;
 
   const getAllKeys = async () => {
     try {
@@ -84,17 +86,17 @@ export default function TabOneScreen() {
                       data={tasks}
                       extraData={renderDummy}
                       showsVerticalScrollIndicator={false}
-                      style={tw`grow-0 h-7/8`}
+                      style={tw`grow-0 ${Platform.OS === 'web' ? `min-h-3/4 max-h-110` : 'h-7/8'}`}
                       renderItem={({item}) => (
-                      <ThemedView style={tw`flex-row items-center gap-4`}>
-                        <ColoredButton
-                          colorLight={tintColorLight}
-                          colorDark={tintColorDark}
-                          onPress={() => {
-                            removeValue(item[0]);
-                          }}/>
-                        <ThemedText style={tw``}>{item[1]}</ThemedText>
-                      </ThemedView>
+                        <ThemedView style={tw`flex-row items-center gap-4`}>
+                          <ColoredButton
+                            colorLight={tintColorLight}
+                            colorDark={tintColorDark}
+                            onPress={() => {
+                              removeValue(item[0]);
+                            }}/>
+                          <ThemedText style={tw``}>{item[1]}</ThemedText>
+                        </ThemedView>
                       )}
                       ListFooterComponent={
                         <ThemedView style={tw`flex-row items-center justify-center`}>
