@@ -20,7 +20,7 @@ export default function ColoredButton({
   const colorScheme = useColorScheme();
 
   return (
-    <TouchableHighlight style={tw`py-${text ? 3 : 3} px-${text ? 6 : 4} items-center bg-[${colorLight ? colorLight : Colors.light.tint}] dark:bg-[${colorDark ? colorDark : Colors.dark.tint}] rounded-3xl my-4`} onPress = {onPress} underlayColor = 'transparent'>
+    <TouchableHighlight style={tw`py-${text ? 3 : 2} px-${text ? 6 : 4} items-center bg-[${colorLight ? colorLight : Colors.light.tint}] dark:bg-[${colorDark ? colorDark : Colors.dark.tint}] rounded-3xl my-4`} onPress = {onPress} underlayColor = 'transparent'>
         <View>
             <Text style={tw`text-white`}>{text ? text : ''}</Text>
         </View>
