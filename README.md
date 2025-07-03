@@ -12,8 +12,6 @@ A FlexList was used to display the task items and allow for unlimited tasks with
 
 The React Native AsyncStorage package was used to store the to-do list data (I'm also interested in adding the ability to store user-created themes!).
 
-## Video
-
-(Link)[https://youtu.be/s9m4GlzEZbU]
+[Video](https://youtu.be/s9m4GlzEZbU)
 
 
