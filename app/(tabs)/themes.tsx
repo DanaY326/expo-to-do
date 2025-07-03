@@ -32,7 +32,7 @@ export default function TabTwoScreen() {
                         <ThemedView key={index} style={tw`items-center justify-center my-4 mx-2`}>
                           <ColoredButton
                             text={color.name}
-                            onPress={() => {(colorScheme && colorScheme === 'dark') ? setTintColorDark(color.hex) : setTintColorLight(color.hex)}}
+                            onPress={() => {setTintColorDark(color.hex); setTintColorLight(color.hex)}}
                             colorDark={color.hex}
                             colorLight={color.hex}
                           />

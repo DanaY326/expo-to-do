@@ -76,7 +76,7 @@ export default function TabOneScreen() {
   return (
     <SafeAreaProvider>
       <SafeAreaView>
-        <ThemedView style={tw`flex flex-col items-center justify-center`}>
+        <ThemedView style={tw`flex flex-col h-4/4 items-center justify-center`}>
           <SolidHeader text="To Do:" />
           <ThemedView style={tw`items-center justify-center`}>
             <ThemedText

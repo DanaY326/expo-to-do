@@ -24,8 +24,4 @@ export const colors: Color[] = [
         name: "Green",
         hex: "#6fe87a"
     },
-    {
-        name: "Gray",
-        hex: "#808080"
-    },
 ]
