@@ -1,5 +1,6 @@
 import { Image } from 'expo-image';
 import React from 'react';
+import { useContext } from 'react';
 import { Platform, Button, StyleSheet, KeyboardAvoidingView, TextInput, TouchableHighlight, View, Text, Keyboard } from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import tw from 'twrnc';
@@ -13,11 +14,16 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import ColoredButton from '@/components/ui/ColoredButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SolidHeader from '@/components/SolidHeader';
+import { ThemeContext } from './_layout';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabThreeScreen() {
   const [numTasks, setNumTasks] = React.useState(0);
   const [text, setText] = React.useState("");
   const [isKeyboardVisible, setIsKeyboardVisible] = React.useState(false);
+
+  const colorScheme = useColorScheme();
+  const { tintColorLight, setTintColorLight, tintColorDark, setTintColorDark } = useContext(ThemeContext);
 
   React.useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', handleKeyboardShow);
@@ -74,9 +80,19 @@ export default function TabThreeScreen() {
               </Text>
               <ThemedView style={tw`items-center`}>
                 <ColoredButton 
+                  colorLight={tintColorLight}
+                  colorDark={tintColorDark}
                   text="Submit"
-                    onPress={onSubmit}/>
-                    {isKeyboardVisible ? <ColoredButton text="V" onPress={Keyboard.dismiss} /> : null}
+                  onPress={onSubmit}/>
+                {
+                  isKeyboardVisible 
+                  ? 
+                  <ColoredButton text="V" onPress={Keyboard.dismiss} 
+                    colorLight={tintColorLight}
+                    colorDark={tintColorDark} /> 
+                  : 
+                  null
+                }
               </ThemedView>
             </KeyboardAvoidingView>
           </ThemedView>

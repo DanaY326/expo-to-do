@@ -1,5 +1,6 @@
 import { Image } from 'expo-image';
 import React from 'react';
+import { useContext } from 'react';
 import { FlatList, ScrollView, Dimensions } from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import tw from 'twrnc';
@@ -10,11 +11,16 @@ import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ColoredButton from '@/components/ui/ColoredButton';
+import { ThemeContext } from './_layout';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabOneScreen() {
   const [renderDummy, setRenderDummy] = React.useState(true);
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
+
+  const colorScheme = useColorScheme();
+  const { tintColorLight, setTintColorLight, tintColorDark, setTintColorDark } = useContext(ThemeContext);
 
   const getAllKeys = async () => {
     try {
@@ -87,6 +93,8 @@ export default function TabOneScreen() {
                       renderItem={({item}) => (
                       <ThemedView style={tw`flex-row items-center gap-4`}>
                         <ColoredButton
+                          colorLight={tintColorLight}
+                          colorDark={tintColorDark}
                           onPress={() => {
                             removeValue(item[0]);
                           }}/>
@@ -96,6 +104,8 @@ export default function TabOneScreen() {
                       ListFooterComponent={
                         <ThemedView style={tw`flex-row items-center justify-center`}>
                           <ColoredButton 
+                            colorLight={tintColorLight}
+                            colorDark={tintColorDark}
                             text="Clear"
                             onPress={removeAll}/>
                         </ThemedView>
