@@ -11,7 +11,3 @@ The app was otherwise styled(margins, containers, backgrounds, etc.) through Tai
 A FlexList was used to display the task items and allow for unlimited tasks without significant performance issues. Pressables were used as buttons as they support many mobile touch possibilities and the bottom bar navigator was implemented for ease of use. 
 
 The React Native AsyncStorage package was used to store the to-do list data (I'm also interested in adding the ability to store user-created themes!).
-
-[Demo](https://youtu.be/s9m4GlzEZbU)
-
-
