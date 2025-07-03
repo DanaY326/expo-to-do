@@ -22,7 +22,6 @@ export default function TabThreeScreen() {
   const [text, setText] = React.useState("");
   const [isKeyboardVisible, setIsKeyboardVisible] = React.useState(false);
 
-  const colorScheme = useColorScheme();
   const { tintColorLight, setTintColorLight, tintColorDark, setTintColorDark } = useContext(ThemeContext);
 
   React.useEffect(() => {

@@ -19,7 +19,6 @@ export default function TabOneScreen() {
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
 
-  const colorScheme = useColorScheme();
   const { tintColorLight, setTintColorLight, tintColorDark, setTintColorDark } = useContext(ThemeContext);
 
   const getAllKeys = async () => {
@@ -89,7 +88,8 @@ export default function TabOneScreen() {
                       keyExtractor={(item) => item[0]}
                       data={tasks}
                       extraData={renderDummy}
-                      style={tw``}
+                      showsVerticalScrollIndicator={false}
+                      style={tw`grow-0 h-7/8`}
                       renderItem={({item}) => (
                       <ThemedView style={tw`flex-row items-center gap-4`}>
                         <ColoredButton
