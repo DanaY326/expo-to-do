@@ -18,12 +18,12 @@ export default function TabTwoScreen() {
     <SafeAreaProvider>
       <SafeAreaView>
         <ThemedView style={tw`flex flex-col items-center justify-center`}>
-          <ThemedView style={tw`flex flex-wrap min-h-screen items-center justify-center`}>
+          <ThemedView style={tw`flex flex-wrap items-center justify-center`}>
             <SolidHeader text="Themes" />
-            <ThemedView style={tw`flex-row w-full items-center justify-center`}>
+            <ThemedView style={tw`flex-row flex-wrap-reverse items-center justify-center mx-2`}>
               {
                 colors.map((color: Color, index: number) => (
-                  <ThemedView key={index} style={tw`items-center justify-center my-4 mx-2`}>
+                  <ThemedView key={index} style={tw`items-center justify-center mx-2`}>
                     <ColoredButton
                       text={color.name}
                       onPress={() => {setTintColorDark(color.hex); setTintColorLight(color.hex)}}
