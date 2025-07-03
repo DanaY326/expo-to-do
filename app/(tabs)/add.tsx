@@ -22,6 +22,7 @@ export default function TabThreeScreen() {
   const [text, setText] = React.useState("");
   const [isKeyboardVisible, setIsKeyboardVisible] = React.useState(false);
 
+  const colorScheme = useColorScheme();
   const { tintColorLight, setTintColorLight, tintColorDark, setTintColorDark } = useContext(ThemeContext);
 
   React.useEffect(() => {
@@ -69,7 +70,7 @@ export default function TabThreeScreen() {
                   multiline
                   numberOfLines={2}
                   maxLength={140}
-                  style={tw`flex border border-gray-300 items-center text-sm w-full text-black rounded-lg p-2`}
+                  style={tw`flex border border-gray-300 items-center text-sm w-full rounded-lg p-2`}
                   onChangeText={text => setText(text)}
                   value={text}
                   onSubmitEditing={onSubmit}
