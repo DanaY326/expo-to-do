@@ -8,8 +8,6 @@ import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/themes/Colors';
-import { useContext } from 'react';
 import { createContext } from 'react';
 
 

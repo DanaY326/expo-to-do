@@ -1,4 +1,3 @@
-import { Image } from 'expo-image';
 import React from 'react';
 import { useContext } from 'react';
 import { FlatList, ScrollView, Dimensions } from 'react-native';
@@ -8,16 +7,12 @@ import tw from 'twrnc';
 import SolidHeader from '@/components/SolidHeader';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ColoredButton from '@/components/ui/ColoredButton';
 import { ThemeContext } from './_layout';
-import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabOneScreen() {
   const [renderDummy, setRenderDummy] = React.useState(true);
-  const width = Dimensions.get('window').width;
-  const height = Dimensions.get('window').height;
 
   const { tintColorLight, setTintColorLight, tintColorDark, setTintColorDark } = useContext(ThemeContext);
 

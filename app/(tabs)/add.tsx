@@ -1,16 +1,10 @@
-import { Image } from 'expo-image';
 import React from 'react';
 import { useContext } from 'react';
 import { Platform, Button, StyleSheet, KeyboardAvoidingView, TextInput, TouchableHighlight, View, Text, Keyboard } from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import tw from 'twrnc';
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import ColoredButton from '@/components/ui/ColoredButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SolidHeader from '@/components/SolidHeader';
